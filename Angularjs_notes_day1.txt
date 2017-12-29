@@ -1,0 +1,621 @@
+
+*****************************************
+KEY POINTS**************
+*******************************
+ng-app=""
+ng-init="a=5;b=5"
+ng-bind="a * b "         .......   {{ a + b }}
+<h1 ng-repeat="x in arr">  {{ x  }} </h1>
+ng-controller="myctrl"
+<input ng-model="a" type="text" size="5"/>  
+<span ng-bind="b"></span>
+<button ng-click="add()">Click to ADD</button>
+{{x.empname | uppercase}}
+{{x.empname | lowercase}}
+<h1 ng-repeat="x in names | orderBy: 'empname'">
+
+<h1 ng-repeat="x in names | orderBy: '-empname'">
+<li>{{product.price | currency:"Rs"}}</li>
+<div>{{mydate | date:"dd/MM/yy"}}</div>
+<ul ng-repeat="product in products | limitTo:2">
+ <div ng-show="checked">
+  <div ng-hide="checked">
+
+*****************************************
+-------------------------
+
+.................................................................
+
+<!DOCTYPE html>
+<html ng-app="">  --------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>
+<head>
+<script src="script/angular.js"></script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-app="">
+<h1>  {{ 5 + 5 }} </h1>
+</div>
+</body>
+</html>
+-----------------------------------
+<!DOCTYPE html>
+<html ng-app="">
+<head>
+<script src="script/angular.js"></script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-init="a=5;b=5"> ------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+<h1>  {{ a + b }} </h1>
+</div>
+</body>
+</html>
+___________________________________________________
+<!DOCTYPE html>
+<html ng-app="">
+<head>
+<script src="script/angular.js"></script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-init="a=5;b=5">
+<h1>  {{ a + b }} </h1>
+<h1 ng-bind="a * b "></h1> -------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+</div>
+</body>
+</html
+-------------------------------------------------
+//
+
+<!DOCTYPE html>
+<html ng-app="">
+<head>
+<script src="script/angular.js"></script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-init="a=5;b=5;person={empId:1001,empNAme:'JOHN'}">
+<h1>  {{ person.empId}} </h1>
+<h1 ng-bind="a * b "></h1>
+</div>
+</body>
+</html>
+----------------------------------------------
+//arrays
+
+
+<!DOCTYPE html>
+<html ng-app="">
+<head>
+<script src="script/angular.js"></script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-init="a=5;b=5;person={empId:1001,empNAme:'JOHN'};arr=[1,2,3]">
+<h1>  {{ arr[1]}} </h1>
+<h1 ng-bind="a * b "></h1>
+</div>
+</body>
+</html>
+-----------------------------------------
+//for each
+
+
+
+<!DOCTYPE html>
+<html ng-app="">
+<head>
+<script src="script/angular.js"></script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-init="arr=[10,20,3]">
+<h1 ng-repeat="x in arr">  {{ x  }} </h1>
+
+</div>
+</body>
+</html>
+-----------------------------------------------
+//index .....ng-repeat is very powerfull directory in AngularJS
+
+<!DOCTYPE html>
+<html ng-app="">
+<head>
+<script src="script/angular.js"></script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-init="arr=[10,20,3]">
+<h1 ng-repeat="x in arr"> {{$index}} {{ x}} </h1>
+
+</div>
+</body>
+</html>
+-------------------------------------------
+//making module and controller, injecting data in module,, then link view to module
+
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<script src="script/angular.js"></script>
+<script>
+	var myapp = angular.module("myapp", []);------------------>>>>>>>>>>>module
+	myapp.controller("myctrl", function($scope) {-------------->>>>>contrpoller
+	$scope.arr=[10,20,30,40,50]; ----------->>>>data into mpodule
+	
+
+	});
+</script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div ng-controller="myctrl">
+		<h1 ng-repeat="x in arr">{{$index}} {{ x}}</h1>   ------------->>>>>>>>>>>>>>>view
+
+	</div>
+</body>
+</html>
+------------------------------------------------------------
+//one way  binding
+
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<script src="script/angular.js"></script>
+<script>
+	var myapp = angular.module("myapp", []);
+	myapp.controller("myctrl", function($scope) {
+	$scope.arr=[10,20,30,40,50];
+	$scope.a=10;
+	$scope.b=364;
+
+	});
+</script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div ng-controller="myctrl">
+	<h1> VAlue Of a={{a}}</h1>
+	<h1>value of b=<span ng-bind="b"></span></h1>
+		<h1 ng-repeat="x in arr">{{$index}} {{ x}}</h1>
+
+	</div>
+</body>
+</html>
+-----------------------------------------
+//two way binding
+//ng-model
+
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<script src="script/angular.js"></script>
+<script>
+	var myapp = angular.module("myapp", []);
+	myapp.controller("myctrl", function($scope) {
+	$scope.arr=[10,20,30,40,50];
+	$scope.a=10;
+	$scope.b=20;
+
+	});
+</script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div ng-controller="myctrl">
+	Enter value of a<input ng-model="a" type="text" size="5"/>    ------------>>>>>>>>>>
+	<br>
+	Enter value of b<input ng-model="b" type="text" size="5"/>   ------------->>>>>>>>>>>>>>
+	<h1> VAlue Of a={{a}}</h1>
+	<h1>value of b=<span ng-bind="b"></span></h1>
+		<h1 ng-repeat="x in arr">{{$index}} {{ x}}</h1>
+
+	</div>
+</body>
+</html>
+---------------------------------------------------------
+
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<script src="script/angular.js"></script>
+<script>
+	var myapp = angular.module("myapp", []);
+	myapp.controller("myctrl", function($scope) {
+	$scope.arr=[10,20,30,40,50];
+	$scope.a=10;
+	$scope.b=20;
+	$scope.c=$scope.a+$scope.b;-------------->>>>>>>>>>>>>>>>
+
+	});
+</script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div ng-controller="myctrl">
+	Enter value of a<input ng-model="a" type="text" size="5"/>
+	<br>
+	Enter value of b<input ng-model="b" type="text" size="5"/>
+	
+	<h1>SUM = {{c}}</h1> ------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	<h1> VAlue Of a={{a}}</h1>
+	<h1>value of b=<span ng-bind="b"></span></h1>
+		<h1 ng-repeat="x in arr">{{$index}} {{ x}}</h1>
+
+	</div>
+</body>
+</html>
+-----------------------------------------------------
+//function to add 
+
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<script src="script/angular.js"></script>
+<script>
+	var myapp = angular.module("myapp", []);
+	myapp.controller("myctrl", function($scope) {
+		$scope.arr = [ 10, 20, 30, 40, 50 ];
+		$scope.a = 10;
+		$scope.b = 20;
+		$scope.c = $scope.a + $scope.b;
+		$scope.add = function() {
+			$scope.c = parseInt($scope.a) + parseInt($scope.b);-->>>>>>parsing to integer
+		}
+
+	});
+</script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div ng-controller="myctrl">
+		Enter value of a<input ng-model="a" type="text" size="5" /> <br>
+		Enter value of b<input ng-model="b" type="text" size="5" />
+
+
+		<h1>VAlue Of a={{a}}</h1>
+
+		<h1>
+			value of b=<span ng-bind="b"></span>
+		</h1>
+		<h1>SUM = {{c}}</h1>
+		<button ng-click="add()">Click to ADD</button>
+		<h1 ng-repeat="x in arr">{{$index}} {{ x}}</h1>
+
+	</div>
+</body>
+</html>
+------------------------------------------------------
+
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<script src="script/angular.js"></script>
+<script src="script/myScript.js">
+	
+</script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div ng-controller="myctrl">
+		Enter value of a<input ng-model="a" type="text" size="5" /> <br>
+		Enter value of b<input ng-model="b" type="text" size="5" />
+
+
+		<h1>VAlue Of a={{a}}</h1>
+
+		<h1>
+			value of b=<span ng-bind="b"></span>
+		</h1>
+		<h1>SUM = {{c}}</h1>
+		<button ng-click="add()">Click to ADD</button>
+			<button ng-click="addtoarray()">Click to ADD to ARRAY</button>
+		<h1 ng-repeat="x in arr track by $index">{{$index}} {{ x}}</h1>
+
+	</div>
+</body>
+</html>
+----------------------------------
+var myapp = angular.module("myapp", []);
+	myapp.controller("myctrl", function($scope) {
+		$scope.arr = [ 10, 20, 30, 40, 50 ];
+		$scope.a = 10;
+		$scope.b = 20;
+		$scope.c = $scope.a + $scope.b;
+		$scope.addtoarray=function()
+		{
+			$scope.arr.push(60);
+		}
+		$scope.add = function() {
+			$scope.c = parseInt($scope.a) + parseInt($scope.b);
+		}
+
+	});
+**********************************
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<script src="script/angular.js"></script>
+<script src="script/myScript.js">
+	
+</script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-controller="empctrl">
+<h1 ng-repeat="x in names">
+{{x.empid}}
+{{x.empname}}
+</h1>
+</div>
+	<div ng-controller="myctrl">
+		Enter value of a<input ng-model="a" type="text" size="5" /> <br>
+		Enter value of b<input ng-model="b" type="text" size="5" />
+
+
+		<h1>VAlue Of a={{a}}</h1>
+
+		<h1>
+			value of b=<span ng-bind="b"></span>
+		</h1>
+		<h1>SUM = {{c}}</h1>
+		<button ng-click="add()">Click to ADD</button>
+			<button ng-click="addtoarray()">Click to ADD to ARRAY</button>
+		<h1 ng-repeat="x in arr track by $index">{{$index}} {{ x}}</h1>
+
+	</div>
+</body>
+</html>
+----------------------------------------
+var myapp = angular.module("myapp", []);
+myapp.controller("empctrl",function($scope){
+	$scope.names=[{empid : 1001, empname:"manisha"},
+	              {empid : 1002, empname:"mani"},
+	              {empid : 1003, empname:"nisha"}
+	              ];
+	
+});
+myapp.controller("myctrl", function($scope) {
+	$scope.arr = [ 10, 20, 30, 40, 50 ];
+	$scope.a = 10;
+	$scope.b = 20;
+	$scope.c = $scope.a + $scope.b;
+	$scope.addtoarray = function() {
+		$scope.arr.push(60);
+	}
+	$scope.add = function() {
+		$scope.c = parseInt($scope.a) + parseInt($scope.b);
+	}
+
+});
+--------------------------------------------------------------
+//root scope
+
+var myapp = angular.module("myapp", []);
+myapp.run(function($rootScope){
+	$rootScope.a=900;
+	
+	
+});
+myapp.controller("empctrl",function($scope){
+	$scope.names=[{empid : 1001, empname:"manisha"},
+	              {empid : 1002, empname:"mani"},
+	              {empid : 1003, empname:"nisha"}
+	              ];
+	
+});
+myapp.controller("myctrl", function($scope) {
+	$scope.arr = [ 10, 20, 30, 40, 50 ];
+
+	$scope.b = 20;
+	$scope.c = $scope.a + $scope.b;
+	$scope.addtoarray = function() {
+		$scope.arr.push(60);
+	}
+	$scope.add = function() {
+		$scope.c = parseInt($scope.a) + parseInt($scope.b);
+	}
+
+});
+-
+****************************************************************
+//directives
+Element name E
+Attribute A
+Class C
+Comment M
+
+
+<cg-hello></cg-hello>  
+<h1 cg-hello></h1>
+<h1 class='cg-hello'></h1>
+<!-- cg-hello -->
+-------------------------------------
+myapp.directive("product", function(){
+	
+	return {
+		restrict:"E",  -------------------------->restricted..used as element only
+		template: "<h1>Product Data Coming in element Name ...</h1>"
+	}
+	
+});
+--------------------
+<product></product>
+----------------------------------
+Click Me For Hide Or show :<input type="checkbox" ng-model="checked"><br/>
+<div>
+  Show:
+  <div ng-show="checked">
+    I show up when your checkbox is checked.
+  </div>
+</div>
+<div>
+  Hide:
+  <div ng-hide="checked">
+     I hide when your checkbox is checked.
+  </div>
+</div>
+-----------------------------------------
+<div>PRODUCT LIST</div>
+<ul>  
+    <li><a href="#" ng-click="product='one'">Book</a></li>  
+    <li><a href="#" ng-click="product='two'">Mobile</a></li>  
+  
+</ul> 
+<div ng-switch on="product">  
+    <div ng-switch-when="one">  
+        <h1>Pro Angular Js</h1>  
+        <img ng-src="Image/Book.jpg" height="200px" width="300px">
+    </div>  
+    <div ng-switch-when="two">  
+        <h1>Iphone Mobile</h1>
+        <img ng-src="Image/mobile.jpg"  height="200px" width="300px" >
+    </div>  
+    <div ng-switch-default>  
+        <h1>Page Default</h1>  
+    </div>  
+</div>  
+--------------------------------------------
+
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script type="text/javascript" src="script/angular.js"></script>
+<style type="text/css">
+.odd {
+  color: red;
+}
+.even {
+  color: blue;
+}
+
+
+</style>
+</head>
+<!-- DEMO FOR ng-odd/even class  -->
+<body >
+  <ol ng-init="names=['Uma', 'Tanmaya', 'Vinod','Anju','Yukti']">
+  <li ng-repeat="name in names">
+   <span ng-class-odd="'odd'" ng-class-even="'even'">
+     {{name}}
+   </span>
+  </li>
+</ol>
+</body>
+</html>
+--------------------------------------------
+<html ng-app="eventApp">
+<head>
+<title>AngularJS - Event Directives</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<script type="text/javascript" src="script/angular.js"></script>
+<script type="text/javascript" src="script/scriptevent.js"></script>
+</head>
+<body>
+<!-- DEMO FOR Events  -->
+<h1>AngularJS - Event Directives</h1>
+<div ng-controller="EventController">
+	<h3>ngClick</h3>
+	<hr/>
+	<input type="button" ng-click="IncrementCounter()" value="Click to increment the counter"/><br/>
+	<div>
+		<span>Counter : {{counter}}</span>
+	</div>
+	<h3>ngDblclick</h3>
+	<hr/>
+	<input type="button" ng-dblclick="IncrementCounter()" value="Double click to increment the counter"/><br/>
+	<div>
+		<span>Counter : {{counter}}</span>
+	</div>
+	<h3>ngMouseup</h3>
+	<hr/>
+	<input type="button" ng-mouseup="IncrementCounter()" value="Press and release mouse left button to increment the counter"/><br/>
+	<div>
+		<span>Counter : {{counter}}</span>
+	</div>
+	<h3>ngMousedown</h3>
+	<hr/>
+	<input type="button" ng-mousedown="IncrementCounter()" value="Press mouse left button to increment the counter"/><br/>
+	<div>
+		<span>Counter : {{counter}}</span>
+	</div>
+	<h3>ngMousemove</h3>
+	<hr/>
+	<input type="button" ng-mousemove="IncrementCounter()" value="Increment the counter when mouse pointer moves on the button"/><br/>
+	<div>
+		<span>Counter : {{counter}}</span>	
+	</div>
+	<h3>ngMouseover</h3>
+	<hr/>
+	<input type="button" ng-mouseover="IncrementCounter()" value="Increment the counter when mouse pointer moves over the button"/><br/>
+	<div>
+		<span>Counter : {{counter}}</span>
+	</div>
+	<h3>ngMouseenter &amp; ngMouseLeave</h3>
+	<hr/>
+	<input type="button" ng-mouseenter="ChangeCounter(true)" ng-mouseleave="ChangeCounter(false)" value="Increment the counter while mouse enters and decrement when mouse leaves"/><br/>
+	<div>
+		<span>Counter : {{counter}}</span>
+	</div>
+	<h3>ngChange</h3>
+	<hr/>
+	<div>
+	   <input type="checkbox" ng-change="ChangeStatus(status)" ng-model="status" />
+		<input type="button" value="{{statusText}}"/><br/>
+	</div>
+	
+</div>
+</body>
+
+</html>
+-------------------------------------------------------------
+<html>
+<head>
+<title>AngularJS - Config</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<script type="text/javascript" src="script/angular.js"></script>
+</head>
+<body>
+<h1>AngularJS - config()</h1>
+<div ng-app="myApp">
+    {[{1+2}]}
+</div>
+</body>
+
+<script>	
+
+var app= angular.module("myApp",[]);
+
+app.config(function($interpolateProvider){
+        $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+    }
+);
+
+</script>
+
+</html>
+-------------------------------------------------------------
+steps followed
+
+config
+run
+directive
+contrller
+	

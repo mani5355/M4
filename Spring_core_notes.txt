@@ -1,0 +1,848 @@
+//check singleton..............
+
+ApplicationContext applicationContext=new ClassPathXmlApplicationContext("spring.xml");
+		Triangle triangle = (Triangle)applicationContext.getBean("triangle");
+		triangle.draw();
+		Triangle triangle1 = (Triangle)applicationContext.getBean("triangle");
+		triangle.draw();
+		if(triangle==triangle1){
+		System.out.println("singleton");	
+		}
+		else
+			System.out.println("dfhdsu");
+		
+	}
+/////output..singleton
+************************************************
+//change scope in xml...............
+//default scope is singleton................
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+<bean id="triangle" class="com.test.Triangle" scope="prototype">
+<property name="triangleName" value="Isosceles"/>
+</bean>
+	 
+</beans>
+***************************************************************
+//use index or type to remove exception.................
+<bean id="triangle2" class="com.test.Triangle">
+
+<constructor-arg index="1" value="equilateral"/>
+<constructor-arg index="0" value="4"/>
+</bean>
+
+----------------------------
+<bean id="triangle2" class="com.test.Triangle">
+
+<constructor-arg type="string" value="equilateral"/>
+<constructor-arg type="int" value="4"/>
+</bean>
+*******************************************************
+//bean1
+package com.test;
+
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+
+public class Triangle implements InitializingBean,DisposableBean
+{
+	
+	public void draw()
+	{
+		System.out.println("Triangle draw ");
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		System.out.println(" Init method called");
+		
+	}
+
+	@Override
+	public void destroy() throws Exception {
+		System.out.println(" destroy mehtod called");
+		
+	}
+
+}
+----------------------------------------------------
+package com.test;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class TestApp {
+	public static void main(String[] args) {
+		//applicationContext not having any close method..but classpathxmlapplication context have method close...so we changed it
+		ClassPathXmlApplicationContext applicationContext=new ClassPathXmlApplicationContext("spring1.xml");
+		Triangle triangle = (Triangle)applicationContext.getBean("triangle");
+		triangle.draw();
+		applicationContext.close();
+		
+	}
+
+}
+----------------------------------------
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+<bean id="triangle" class="com.test.Triangle">
+
+</bean>
+	 
+</beans>
+************************************************************************************
+//lifecycle of 
+<bean id="triangle" class="com.test.Triangle" init-method="init" destroy-method="destroy">
+-----------------------------------------------------------------------------------------
+//defautlt init and default destroy.........it vl run for every bean 
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd" default-init-method="init" default-destroy-method="destroy">
+<bean id="triangle" class="com.test.Triangle">
+
+</bean>
+	 
+</beans
+------------------------------------------------------------------------------------------------
+---------------------------------------
+//bean2 
+package com.test;
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+
+public class BPP implements BeanPostProcessor {
+
+	@Override
+	public Object postProcessAfterInitialization(Object obj, String arg1)
+			throws BeansException {
+		System.out.println("BPP AFTER INIT CALLED");
+		return obj;
+	}
+
+	@Override
+	public Object postProcessBeforeInitialization(Object obj, String arg1)
+			throws BeansException {
+		System.out.println("BPP BEFORE INIT CALLED");
+		return obj;
+	}
+
+}
+------------------------------------------------
+//bean3
+package com.test;
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+
+public class BFPP implements BeanFactoryPostProcessor{
+
+	@Override
+	public void postProcessBeanFactory(ConfigurableListableBeanFactory arg0)
+			throws BeansException {
+		System.out.println("BFPP METHOD CALLED");
+		
+	}
+
+}
+*******************************************************************
+//edited bean1..................
+
+package com.test;
+
+import org.springframework.beans.factory.BeanNameAware;
+
+
+public class Triangle implements BeanNameAware
+{
+	
+	public void draw()
+	{
+		System.out.println("Triangle draw ");
+	}
+
+	public void init(){
+		System.out.println("init method called");
+		
+	}
+	public void destroy(){
+		System.out.println("destroy method called");
+	}
+
+	@Override
+	public void setBeanName(String arg0) {
+		System.out.println("BEAN NAME AWARE NAME = "+arg0);
+		
+	}
+
+}
+//here whole life cycle completes//
+
+//OUTPUT
+
+BFPP METHOD CALLED
+BEAN NAME AWARE NAME=triangle
+BPP BEFORE INIT CALLED
+init method called
+BPP AFTER INIT CALLED
+Triangle draw 
+destroy method called
+
+**********************************************************************
+package com.test;
+
+public class Triangle
+{
+	private Point point;
+	
+	public Point getPoint() {
+		return point;
+	}
+	public void setPoint(Point point) {
+		this.point = point;
+	}
+	public void draw()
+	{
+		System.out.println("Triangle draw "+point.getX()+" "+point.getY());
+	}
+	
+
+}
+------------------------------------------------
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd" default-init-method="init" default-destroy-method="destroy">
+<bean id="triangle" class="com.test.Triangle">
+<property name="point" ref="point"/>
+</bean>
+<bean id="point" class="com.test.Point">
+<property name="x" value="10"/>
+<property name="y" value="20"/>
+</bean>
+
+
+	 
+</beans>
+
+********************************************************************************************************
+//setter injection
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd" default-init-method="init" default-destroy-method="destroy">
+<bean id="triangle" class="com.test.Triangle">
+<property name="point1" ref="point1"/>
+<property name="point2" ref="point2"/>
+<property name="point3" ref="point3"/>
+</bean>
+<bean id="point1" class="com.test.Point">
+<property name="x" value="10"/>
+<property name="y" value="20"/>
+</bean>
+<bean id="point2" class="com.test.Point">
+<property name="x" value="19"/>
+<property name="y" value="40"/>
+</bean>
+
+<bean id="point3" class="com.test.Point">
+<property name="x" value="12"/>
+<property name="y" value="16"/>
+</bean>
+
+
+	 
+</beans>
+-------------------------------------------------------------
+//edited...using constructor injection
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd" default-init-method="init" default-destroy-method="destroy">
+<bean id="triangle" class="com.test.Triangle">
+<constructor-arg ref="point1"/>
+<constructor-arg ref="point2"/>
+<constructor-arg ref="point3"/>
+</bean>
+<bean id="point1" class="com.test.Point">
+<property name="x" value="10"/>
+<property name="y" value="20"/>
+</bean>
+<bean id="point2" class="com.test.Point">
+<property name="x" value="19"/>
+<property name="y" value="40"/>
+</bean>
+
+<bean id="point3" class="com.test.Point">
+<property name="x" value="12"/>
+<property name="y" value="16"/>
+</bean>
+
+
+	 
+</beans>
+----------------------------------------------------------------
+//edited...using autowire by name...i.e by setter
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd" default-init-method="init" default-destroy-method="destroy">
+<bean id="triangle" class="com.test.Triangle" autowire="byName">
+
+</bean>
+<bean id="point1" class="com.test.Point"> //point1 should be a property of triangle bean in case of autowire by name
+<property name="x" value="10"/>
+<property name="y" value="20"/>
+</bean>
+<bean id="point2" class="com.test.Point">
+<property name="x" value="19"/>
+<property name="y" value="40"/>
+</bean>
+
+<bean id="point3" class="com.test.Point">
+<property name="x" value="12"/>
+<property name="y" value="16"/>
+</bean>
+
+
+	 
+</beans>
+
+//
+
+---------
+//<bean id="triangle" class="com.test.Triangle" autowire="byType">//wont work because here 3 beans are there...
+------------------------------------
+
+-------------------------
+<bean id="triangle" class="com.test.Triangle" autowire="constructor">
+</bean>
+<bean id="point1" class="com.test.Point">
+<property name="x" value="10"/>
+<property name="y" value="20"/>
+</bean>
+<bean id="point2" class="com.test.Point">
+<property name="x" value="19"/>
+<property name="y" value="40"/>
+</bean>
+
+<bean id="point3" class="com.test.Point">
+<property name="x" value="12"/>
+<property name="y" value="16"/>
+</bean>
+
+
+	 
+</beans>
+--------------------------------------------------------------
+package com.test;
+
+public class Triangle
+{
+	private Point point1;
+	private Point point2;
+	private Point point3;
+	
+	
+
+	public Point getPoint1() {
+		return point1;
+	}
+
+
+	public void setPoint1(Point point1) {
+		this.point1 = point1;
+	}
+
+
+	public Point getPoint2() {
+		return point2;
+	}
+
+
+	public void setPoint2(Point point2) {
+		this.point2 = point2;
+	}
+
+
+	public Point getPoint3() {
+		return point3;
+	}
+
+
+	public void setPoint3(Point point3) {
+		this.point3 = point3;
+	}
+	
+
+	public void draw()
+	{
+		System.out.println("Triangle draw "+point1.getX()+" "+point1.getY());
+		System.out.println("Triangle draw "+point2.getX()+" "+point2.getY());
+		System.out.println("Triangle draw "+point3.getX()+" "+point3.getY());
+	}
+
+}
+-------------------------------------------
+package com.test;
+
+public class Point {
+	private int x;
+	private int y;
+	
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+
+}
+--------------------------------------
+package com.test;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class TestApp {
+	public static void main(String[] args) {
+		//applicationContext not having any close method..but classpathxmlapplication context have method close...so we changed it
+		ClassPathXmlApplicationContext applicationContext=new ClassPathXmlApplicationContext("spring2.xml");
+		Triangle triangle = (Triangle)applicationContext.getBean("triangle");
+		triangle.draw();
+		
+	}
+
+}
+***********************************************************************************************
+<bean id="triangle" class="com.test.Triangle" autowire="byType">
+</bean>
+<bean id="point1" class="com.test.Point">
+<property name="x" value="10"/>
+<property name="y" value="20"/>
+</bean>
+
+--------------------------------------------------
+<bean id="triangle" class="com.test.Triangle" autowire="constructor">
+</bean>
+<bean id="point1" class="com.test.Point">
+<property name="x" value="10"/>
+<property name="y" value="20"/>
+</bean>
+
+---------------------------------------
+****************************************
+//using list........................
+
+<bean id="triangle" class="com.test.Triangle">
+<property name="points"/>
+<list>
+<ref bean="point1"/>
+<ref bean="point2"/>
+<ref bean="point3"/>
+
+</list>
+</bean>
+<bean id="point1" class="com.test.Point">
+<property name="x" value="10"/>
+<property name="y" value="20"/>
+</bean>
+<bean id="point1" class="com.test.Point">
+<property name="x" value="13"/>
+<property name="y" value="22"/>
+</bean>
+<bean id="point1" class="com.test.Point">
+<property name="x" value="13"/>
+------------------------------
+
+----------------------------------
+<property name="y" value="23"/>
+</bean>
+
+--------------------------------------------------------
+package com.test;
+
+import java.util.List;
+
+public class Triangle
+{
+	private List<Point> points;
+	
+
+	public Triangle() {
+		super();
+	}
+
+
+	public void draw()
+	{
+		System.out.println("triangle draws");
+		//if(point!=null)
+		for (Point point : points) {
+			System.out.println("Triangle draw "+point.getX()+" "+point.getY());
+		}
+		
+		
+	}
+
+
+	public List<Point> getPoints() {
+		return points;
+	}
+
+
+	public void setPoints(List<Point> points) {
+		this.points = points;
+	}
+
+
+	public Triangle(List<Point> points) {
+		super();
+		this.points = points;
+	}
+
+}
+-------------------------------------------------------------------------
+package com.test;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class TestApp {
+	public static void main(String[] args) {
+		//applicationContext not having any close method..but classpathxmlapplication context have method close...so we changed it
+		ClassPathXmlApplicationContext applicationContext=new ClassPathXmlApplicationContext("spring2.xml");
+		Triangle triangle = (Triangle)applicationContext.getBean("triangle");
+		triangle.draw();
+		applicationContext.close();
+	}
+
+}
+-----------------------------------------------------
+*************************************************************************************************************************
+******************************************************************************************
+******************************************************************************************************
+************************************************************************************************
+******************************
+ANNOTATOIN---------------------
+1->
+------------------------------------------
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+     <context:annotation-config/>-----------------------enables annotation
+<bean id="triangle" class="com.test.Triangle">
+
+
+</bean>
+	 
+</beans>
+--------------------------------------------------------------------------
+
+public class Triangle
+{
+	@PostConstruct
+	public void init()
+	{
+		System.out.println("init method called");
+		
+	}
+
+	public void draw()
+	{
+		System.out.println("triangle draws");
+		
+		
+	}
+	@PreDestroy
+	public void destroy()
+	{
+		System.out.println("destroy method called");
+	}
+}
+--------------------------------------------------------------------------------
+2->
+-----------------------------------------------------------------
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+     <context:annotation-config/>
+     <context:component-scan base-package="com.test"/>
+	 
+</beans>
+-----
+OR
+-------
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+     <context:component-scan base-package="com.test"/>-------vl enable annptaion as well
+	 
+</beans>
+-------------------------------------------------------------
+
+@Component  //vl take id=triangle i.e lowercase class name........ and class as it is
+public class Triangle
+{
+	@PostConstruct
+	public void init()
+	{
+		System.out.println("init method called");
+		
+	}
+
+	public void draw()
+	{
+		System.out.println("triangle draws");
+		
+		
+	}
+	@PreDestroy
+	public void destroy()
+	{
+		System.out.println("destroy method called");
+	}
+}
+------------------------------
+public class TestApp {
+	public static void main(String[] args) {
+		//applicationContext not having any close method..but classpathxmlapplication context have method close...so we changed it
+		ClassPathXmlApplicationContext applicationContext=new ClassPathXmlApplicationContext("spring3.xml");
+		Triangle triangle = (Triangle)applicationContext.getBean("triangle");
+		triangle.draw();
+		applicationContext.close();
+	}
+
+}
+
+----------------------------------------------------------------------
+3->
+-------------------
+@Component("triangle1")  //vl take id=triangle i.e lowercase class name........ and class as it is
+public class Triangle
+{
+	@PostConstruct
+	public void init()
+	{
+		System.out.println("init method called");
+		
+	}
+
+	public void draw()
+	{
+		System.out.println("triangle draws");
+		
+		
+	}
+	@PreDestroy
+	public void destroy()
+	{
+		System.out.println("destroy method called");
+	}
+}
+---------------------------------------------------------------
+@Component  //vl take id=triangle i.e lowercase class name........ and class as it is
+public class Triangle
+{
+	@Value("Equilateral")---------->it vl work when class is annotated with component...
+	private String triangleName;
+	
+	@PostConstruct
+	public void init()
+	{
+		System.out.println("init method called");
+		
+	}
+
+	public void draw()
+	{
+		System.out.println("triangle draws"+triangleName);
+		
+		
+	}
+	@PreDestroy
+	public void destroy()
+	{
+		System.out.println("destroy method called");
+	}
+}
+
+------------------------------------------------------------------------
+@Component  //vl take id=triangle i.e lowercase class name........ and class as it is
+public class Triangle
+{
+	@Value("Equilateral")
+	private String triangleName;
+	
+	@Autowired   
+	private Point point;
+	
+	
+	public String getTriangleName() {
+		return triangleName;
+	}
+
+	public void setTriangleName(String triangleName) {
+		this.triangleName = triangleName;
+	}
+
+	public Point getPoint() {
+		return point;
+	}
+
+	public void setPoint(Point point) {
+		this.point = point;
+	}
+
+	@PostConstruct
+	public void init()
+	{
+		System.out.println("init method called");
+		
+	}
+
+	public void draw()
+	{
+		System.out.println("triangle draws "+triangleName);
+		System.out.println(point.getX()+" "+point.getY());
+		
+		
+	}
+	@PreDestroy
+	public void destroy()
+	{
+		System.out.println("destroy method called");
+	}
+}
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+package com.test;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Point {
+	@Value("10")
+	private int x;
+	@Value("10")
+	private int y;
+	
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+
+}
+
+------------------------------------------------
+@Component  //vl take id=triangle i.e lowercase class name........ and class as it is
+public class Triangle
+{
+	@Value("Equilateral")
+	private String triangleName;
+	
+	//@Autowired   ///by type by default
+	private Point point;
+	
+	
+	public String getTriangleName() {
+		return triangleName;
+	}
+
+	public void setTriangleName(String triangleName) {
+		this.triangleName = triangleName;
+	}
+
+	public Point getPoint() {
+		return point;
+	}
+
+	@Autowired //autowire by setter injection
+	//if used on constructor...autowire by constructor injection
+	public void setPoint(Point point) {
+		this.point = point;
+		System.out.println("setter");
+	}
+
+	@PostConstruct
+	public void init()
+	{
+		System.out.println("init method called");
+		
+	}
+
+	public void draw()
+	{
+		System.out.println("triangle draws "+triangleName);
+		System.out.println(point.getX()+" "+point.getY());
+		
+		
+	}
+	@PreDestroy
+	public void destroy()
+	{
+		System.out.println("destroy method called");
+	}
+}
+------------------------------------------------
+**********************************************
+LAYERed  ARCH
+-----------------------
+@Service// on class not on interface
+public class EmployeeDAOImpl implements IEmployeeDAO{
+
+	Map<Integer, Employee> map=new HashMap<Integer, Employee>();
+	@Override
+	public void addEmployee(Employee employee) {
+		map.put(employee.getEmployeeId(),employee);
+		
+	}
+
+}
+

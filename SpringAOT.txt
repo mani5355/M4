@@ -1,0 +1,211 @@
+package com.test;
+
+
+public class Account {
+	
+	public void withdraw() {
+		System.out.println(" withdraw called ");
+	}
+
+}
+
+------------------------------------------------------------
+package com.test;
+
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
+@Aspect
+public class AccountAspect {
+	//@Before("execution (public void com.test.account.withdraw())")
+	@Before("execution ( * com.test.*.*())")
+	public void beforeAdvice() {
+		System.out.println(" before advice called");
+
+	}
+	
+	/*@After("execution (public void com.test.Account.withdraw())")
+	public void afterAdvice() {
+		System.out.println(" after advice called");
+
+	}*/
+
+}
+-----------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- Enable the @AspectJ support -->
+	<aop:aspectj-autoproxy />
+	<bean id="account" class="com.test.Account"></bean>
+	<bean id="saving" class="com.test.SavingAccount"></bean>
+	<bean class="com.test.AccountAspect"></bean>
+	
+
+</beans
+--------------------------------------------------------------
+package com.test;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class TestAccount {
+
+	public static void main(String[] args) {
+		ApplicationContext ctx = new ClassPathXmlApplicationContext(
+				"spring.xml");
+
+		//Account account = (Account) ctx.getBean("account");
+		SavingAccount account = (SavingAccount) ctx.getBean("saving");
+		account.withdraw();
+	}
+
+}
+--------------------------------------------------------
+package com.test;
+
+public class SavingAccount {
+	
+	
+	public void withdraw() {
+		System.out.println(" saving account withdraw called ");
+	}
+
+}
+
+**************************************************************************************************
+//common naame to advice
+package com.test;
+
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+
+@Aspect
+public class AccountAspect {
+	@Before("adviceToAll()")
+	public void beforeAdvice() {
+		System.out.println(" before advice called");
+
+	}
+	@Pointcut("execution (* com.test.*.*())")
+	public void adviceToAll()
+	{
+		
+	}
+	
+
+}
+--------------------------------------------------------------
+package com.test;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+
+@Aspect
+public class AccountAspect {
+	@Around("adviceToAll()")
+	public void beforeAdvi(ProceedingJoinPoint pjp) throws Throwable {
+		System.out.println(" before advice called");
+		long start = System.currentTimeMillis();
+
+		Object obj = pjp.proceed();
+
+		long stop = System.currentTimeMillis();
+		System.out.println(" After advice called");
+		System.out.println(" Time = " + (stop - start));
+
+	}
+
+	@Pointcut("execution (* com.test.*.*())")
+	public void adviceToAll() {
+
+	}
+
+}
+
+----------------------------------------------------------------
+package com.test;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+
+@Aspect
+public class AccountAspect {
+	@Around("adviceToAll()")
+	public Object beforeAdvi(ProceedingJoinPoint pjp) throws Throwable {
+		
+		System.out.println(" before withdraw Amount ");
+		Object obj = pjp.proceed();
+
+		int amount=(Integer)obj;
+		
+			System.out.println(" after withdraw Amount "+amount);
+		return obj;
+	}
+
+	@Pointcut("execution (* com.test.*.*())")
+	public void adviceToAll() {
+
+	}
+
+}
+
+----------------------------------------------------------------------------
+package com.test;
+
+
+public class Account {
+	
+	public int withdraw() {
+		System.out.println(" withdraw called ");
+		return(100);
+	}
+
+}
+
+------------------------------------------------------------------------------
+package com.test;
+
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+
+@Aspect
+public class AccountAspect {
+	@AfterThrowing("adviceToAll()")
+	public void advice()
+	{
+		System.out.println(" After throwing exception");
+	}
+	@Pointcut("execution (* com.test.*.*(..))")
+	public void adviceToAll() {
+
+	}
+
+}
+--------------------------------------------------------------------------------------
+package com.test;
+
+
+public class Account {
+	
+	public int withdraw(int amt) {
+	
+		if(amt == 0)
+			throw new ArithmeticException("AMOUNT ZERO ");
+		return amt;
+	}
+	
+}

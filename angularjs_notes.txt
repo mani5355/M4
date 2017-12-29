@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<script src="script/angular.js"></script>
+<script src="script/myScript1.js">
+	
+</script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-controller="myctrl">
+<h1>{{url}}</h1>
+</div>
+</body>
+</html>
+----------------------------------------------------------------
+var myapp= angular.module("myapp",[]);
+myapp.controller("myctrl",function($scope, $location){
+	
+	$scope.url=$location.absUrl();
+	
+});
+-----------------------------------------
+var myapp= angular.module("myapp",[]);
+myapp.controller("myctrl",function($scope, $location){
+	
+	$scope.url=$location.protocol();
+	
+});
+***********************
+-----------------------------------------------
+var myapp= angular.module("myapp",[]);
+myapp.controller("myctrl",function($scope, $timeout){
+	
+	$scope.data="Hello, how are you!!!!!!!!!!";
+	$timeout(function(){
+		$scope.data="Welcome to AngularJS";
+	},2000);
+});
+------------------------------------
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<script src="script/angular.js"></script>
+<script src="script/myScript1.js">
+	
+</script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-controller="myctrl">
+<h1>{{data}}</h1>
+</div>
+</body>
+</html
+--------------------------------------
+var myapp= angular.module("myapp",[]);
+myapp.controller("myctrl",function($scope, $interval){
+	
+	$scope.data=new Date();
+	$interval(function(){
+		$scope.data=new Date();
+	},2000);
+});
+---------------------
+var myapp= angular.module("myapp",[]);
+myapp.controller("myctrl",function($scope, $interval, $window){
+	
+	$scope.data=new Date();
+	$interval(function(){
+		$window.open("http://www.google.com");
+	},5000);
+});
+----------------------
+var myapp= angular.module("myapp",[]);
+myapp.constant("PI","3.142");
+
+myapp.controller("myctrl",function($scope,PI){
+	$scope.data=PI;
+});
+-------------------------------
+var myapp= angular.module("myapp",[]);
+myapp.constant("PI","3.142");
+myapp.service("myservice",function(){
+	this.message=" Hello Hoe are you!!"
+		this.setMessage = function(message){
+		this.Message=msg;
+		return(this.message);
+			
+		};
+});
+
+myapp.controller("myctrl",function($scope,myservice){
+	$scope.data=myservice.message;
+});
+----------------------------------------
+var myapp= angular.module("myapp",[]);
+myapp.constant("PI","3.142");
+myapp.service("myservice",function(){
+	this.message=" Hello from Servcie!"
+		this.setMessage = function(message){
+		this.Message=msg;
+		return(this.message);
+			
+		};
+});
+
+myapp.factory("factoryservice",function(){
+	
+	var obj ={};
+	obj.message="Hello From Factory!";
+	obj.setNessage=function(){
+		obj.message=msg;
+		
+	};
+	return obj;
+});
+myapp.controller("myctrl",function($scope,factoryservice){
+	$scope.msgFactory=factoryservice.setMessage("from servuce");
+	$scope.msgService=myservice.message;
+
+------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
+var myapp= angular.module("myapp",[]);
+myapp.constant("PI","3.142");
+myapp.service("myservice",function(){
+	this.message=" Hello from Servcie!"
+		this.setMessage = function(message){
+		this.Message=msg;
+		return(this.message);
+			
+		};
+});
+
+myapp.factory("factoryservice",function(){
+	
+	var obj ={};
+	obj.message="Hello From Factory!";
+	obj.setMessage=function(){
+		obj.message=msg;
+		return(obj.message);
+	};
+	return obj;
+});
+myapp.controller("myctrl",function($scope,factoryservice){
+	
+	$scope.showMessage=function(msg){
+		$scope.msgFactory=factoryservice.setMessage(msg);
+		$scope.msgService=myservice.setMessage(msg);
+	}
+	
+});
+--------------------
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+<script src="script/angular.js"></script>
+<script src="script/myScript1.js">
+	
+</script>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div ng-controller="myctrl">
+<h1>{{msgService}}</h1>
+<h1>{{msgFactory}}</h1>
+<button ng-click="showMessage(' Bangalore ')">Click</button>
+</div>
+</body>
+</htm
+000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000

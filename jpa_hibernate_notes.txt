@@ -1,0 +1,510 @@
+/*insert in a table/
+package com.cg.jpastart.entities;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+public class EmployeeTest {
+	
+	public static void main(String[] args) {
+	EntityManagerFactory emf=Persistence.createEntityManagerFactory("JPA-PU");
+	EntityManager em=emf.createEntityManager();
+	em.getTransaction().begin();
+	Employee emp=new Employee();
+	emp.setEmployeeName("john");
+	emp.setEmployeeSalary(78000);
+	
+	em.persist(emp);
+	
+	em.getTransaction().commit();
+	System.out.println(" Employee added to database");
+	em.close();
+	emf.close();
+		
+	}
+
+}
+
+*************************************************************************************************************
+
+/*how to fetch details from db/
+
+package com.cg.jpastart.entities;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+public class EmployeeTest {
+	
+	public static void main(String[] args) {
+	EntityManagerFactory emf=Persistence.createEntityManagerFactory("JPA-PU");
+	EntityManager em=emf.createEntityManager();
+	em.getTransaction().begin();
+	
+	Employee emp=em.find(Employee.class, 4);// 4<- primary key
+	
+	if(emp==null)
+	{
+		System.out.println("employee not found");
+	}
+	else
+	{
+		System.out.println(emp.getEmployeeId()+" "+emp.getEmployeeName()+" "+emp.getEmployeeSalary());
+	}
+	
+	
+	em.getTransaction().commit();
+	System.out.println(" Employee added to database");
+	em.close();
+	emf.close();
+		
+	}
+
+}
+
+
+**************************************************************************************************************
+
+/*for removing or deleting data in db
+
+package com.cg.jpastart.entities;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+public class EmployeeTest {
+	
+	public static void main(String[] args) {
+	EntityManagerFactory emf=Persistence.createEntityManagerFactory("JPA-PU");
+	EntityManager em=emf.createEntityManager();
+	em.getTransaction().begin();
+	
+	Employee emp=em.find(Employee.class, 4);// 4<- primary key
+	
+	if(emp==null)
+	{
+		System.out.println("employee not found");
+	}
+	else
+	{
+		em.remove(emp);//remove record based on primary key
+		System.out.println("Employee Removed successfully");
+		//em.clear();
+		//em.detach(emp);//after being detached not updated in db
+		//emp.setEmployeeSalary(90000);//managed state..vl update in db
+		//System.out.println(emp.getEmployeeId()+" "+emp.getEmployeeName()+" "+emp.getEmployeeSalary());
+	}
+	
+	
+	em.getTransaction().commit();
+	System.out.println(" Employee added to database");
+	em.close();
+	emf.close();
+		
+	}
+
+}
+****************************************************************************************************************
+
+//using merge
+
+package com.cg.jpastart.entities;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+public class EmployeeTest {
+	
+	public static void main(String[] args) {
+	EntityManagerFactory emf=Persistence.createEntityManagerFactory("JPA-PU");
+	EntityManager em=emf.createEntityManager();
+	em.getTransaction().begin();
+	
+	Employee emp=em.find(Employee.class, 2);// 2<- primary key
+	
+	if(emp==null)
+	{
+		System.out.println("employee not found");
+	}
+	else
+	{
+		emp.setEmployeeName("Shyam");
+		em.merge(emp);//updating name
+		System.out.println("employeee name updated successful");
+	}
+	
+	
+	em.getTransaction().commit();
+	System.out.println(" Employee added to database");
+	em.close();
+	emf.close();
+		
+	}
+
+}
+************************************************************************************************
+methods in entity manager
+-merge()
+-detach()
+-remove()
+-clear()
+***************************************************************************************************
+/*fetch all details*?
+
+package com.cg.jpastart.entities;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+public class EmployeeTest {
+	
+	public static void main(String[] args) {
+	EntityManagerFactory emf=Persistence.createEntityManagerFactory("JPA-PU");
+	EntityManager em=emf.createEntityManager();
+	em.getTransaction().begin();
+	
+	Query qry=em.createQuery("from Employee e");//select e from Employee e-->select all the fields
+	
+	List list=qry.getResultList();//give list of employee..returns list
+	for(Object obj : list)
+	{
+		Employee emp=(Employee) obj;
+		System.out.println(emp.getEmployeeId()+" "+emp.getEmployeeName()+" "+emp.getEmployeeSalary());
+	}
+	
+	
+	
+	em.getTransaction().commit();
+	System.out.println(" Employee added to database");
+	em.close();
+	emf.close();
+		
+	}
+
+}
+
+*************************************************************************************************************
+
+package com.cg.jpastart.entities;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
+public class EmployeeTest {
+	
+	public static void main(String[] args) {
+	EntityManagerFactory emf=Persistence.createEntityManagerFactory("JPA-PU");
+	EntityManager em=emf.createEntityManager();
+	em.getTransaction().begin();
+	
+	TypedQuery<Employee> qry=em.createQuery("from Employee where employeeId>2", Employee.class);
+	
+	List<Employee> list=qry.getResultList();
+	for(Employee emp : list)
+	{
+		System.out.println(emp.getEmployeeId()+" "+emp.getEmployeeName()+" "+emp.getEmployeeSalary());
+	}
+	
+	
+	em.getTransaction().commit();
+	
+	em.close();
+	emf.close();
+		
+	}
+
+}
+*************************************************************************************************************
+
+package com.cg.jpastart.entities;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
+public class EmployeeTest {
+	
+	public static void main(String[] args) {
+	EntityManagerFactory emf=Persistence.createEntityManagerFactory("JPA-PU");
+	EntityManager em=emf.createEntityManager();
+	em.getTransaction().begin();
+	
+	TypedQuery<Employee> qry=em.createQuery("from Employee where employeeId>2", Employee.class);
+	
+	Employee emp=qry.getSingleResult();
+	
+		System.out.println(emp.getEmployeeId()+" "+emp.getEmployeeName()+" "+emp.getEmployeeSalary());
+
+	
+	
+	em.getTransaction().commit();
+	
+	em.close();
+	emf.close();
+		
+	}
+
+}
+***********************************************************************************************************
+remove the hardcode  4 to ? or named parameter
+
+package com.cg.jpastart.entities;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
+public class EmployeeTest {
+	
+	public static void main(String[] args) {
+	EntityManagerFactory emf=Persistence.createEntityManagerFactory("JPA-PU");
+	EntityManager em=emf.createEntityManager();
+	em.getTransaction().begin();
+	//named parameter 
+	TypedQuery<Employee> qry=em.createQuery("from Employee where employeeId=:id", Employee.class);
+
+	qry.setParameter("id", 4);
+	Employee emp=qry.getSingleResult();
+	
+	System.out.println(emp.getEmployeeId()+" "+emp.getEmployeeName()+" "+emp.getEmployeeSalary());
+	em.getTransaction().commit();
+	
+	em.close();
+	emf.close();
+		
+	}
+
+}
+***********************************************************************************
+package com.cg.jpastart.entities;
+
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+
+public class EmployeeTest {
+	
+	public static void main(String[] args) {
+	EntityManagerFactory emf=Persistence.createEntityManagerFactory("JPA-PU");
+	EntityManager em=emf.createEntityManager();
+	em.getTransaction().begin();
+	//named query
+	
+	TypedQuery<Employee> qry=em.createNamedQuery("viewAllEmployee", Employee.class);
+	 List<Employee> list=qry.getResultList();
+	for(Employee emp : list)
+	{
+		
+	
+	
+	
+	System.out.println(emp.getEmployeeId()+" "+emp.getEmployeeName()+" "+emp.getEmployeeSalary());
+	}
+	em.getTransaction().commit();
+	
+	em.close();
+	emf.close();
+		
+	}
+
+}
+
+**************************************************************************************************
+/*multiple tables
+
+package com.test;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+public class TestMapping {
+
+	public static void main(String[] args) {
+		
+		EntityManagerFactory emf=Persistence.createEntityManagerFactory("JPA-PU");
+		EntityManager em=emf.createEntityManager();
+		em.getTransaction().begin();
+		Employee employee = new Employee();
+		employee.setEmpName("Seema");
+		Department dept= new Department();
+		dept.setDeptName("Finance");
+		
+		employee.setDepartment(dept);
+		em.persist(employee);
+		em.persist(dept);
+		
+		em.getTransaction().commit();
+		System.out.println("Employee added");
+		em.close();
+		emf.close();
+
+	}
+
+}
+**********************************************************************************
+//cascading style
+
+public class Employee {
+	@Id
+	@GeneratedValue
+	@Column(name="emp_id")
+	private int empId;
+	
+	@Column(name="emp_name")
+	private String empName;
+	
+	@OneToOne(cascade= CascadeType.ALL)//$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+	@JoinColumn(name="dept_id")
+	private Department department;
+
+
+----------------------------------------
+
+package com.test;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+public class TestMapping {
+
+	public static void main(String[] args) {
+		
+		EntityManagerFactory emf=Persistence.createEntityManagerFactory("JPA-PU");
+		EntityManager em=emf.createEntityManager();
+		em.getTransaction().begin();
+		Employee employee = new Employee();
+		employee.setEmpName("Seema");
+		Department dept= new Department();
+		dept.setDeptName("Finance");
+		
+		employee.setDepartment(dept);
+		em.persist(employee);
+		//em.persist(dept);
+		
+		em.getTransaction().commit();
+		System.out.println("Employee added");
+		em.close();
+		emf.close();
+
+	}
+
+}
+**************************************************************************************************
+//find and get info of  child table from parent table
+package com.test;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+public class TestMapping {
+
+	public static void main(String[] args) {
+		
+		EntityManagerFactory emf=Persistence.createEntityManagerFactory("JPA-PU");
+		EntityManager em=emf.createEntityManager();
+		em.getTransaction().begin();
+		Employee emp=em.find(Employee.class, 1);
+		
+		System.out.println(emp.getEmpName()+"   "+emp.getDepartment().getDeptName());
+		
+		em.getTransaction().commit();
+		System.out.println("Employee added");
+		em.close();
+		emf.close();
+
+	}
+
+}
+*****************************************************************
+//lazy fetch style
+
+	
+	@OneToOne(cascade= CascadeType.ALL,fetch=FetchType.LAZY)
+	@JoinColumn(name="dept_id")
+	private Department department;
+
+--------------------------------------------
+
+		EntityManagerFactory emf=Persistence.createEntityManagerFactory("JPA-PU");
+		EntityManager em=emf.createEntityManager();
+		em.getTransaction().begin();
+		Employee emp=em.find(Employee.class, 3);
+		System.out.println(emp.getEmpName());
+		
+		em.getTransaction().commit();
+		System.out.println("Employee info");
+		em.close();
+		emf.close();
+------------------------------------------------
+//bidirectional
+
+@OneToOne(mappedBy="department")
+	private Employee employee;
+------------------------------
+Department dept=em.find(Department.class, 6);
+		System.out.println(dept.getEmployee().getEmpName());
+--------------------------------------------
+************************************************
+EntityManagerFactory emf=Persistence.createEntityManagerFactory("JPA-PU");
+		EntityManager em=emf.createEntityManager();
+		em.getTransaction().begin();
+		String qeyStr="from Employee where department.deptId>0";
+	     TypedQuery<Employee> query = em.createQuery(qeyStr, Employee.class);
+	     List<Employee> list = query.getResultList();
+	     for (Employee employee : list) {
+	    	
+			System.out.println("Name: "+employee.getEmpName()+"\nDepartment: "+employee.getDepartment().getDeptName());
+		}
+	     
+		
+		em.getTransaction().commit();
+		System.out.println("Employee info");
+		em.close();
+		emf.close();
+*********************************************************************
+//bidirectional
+Department d1=new Department();
+	d1.setId(11);
+	d1.setName("Finance");
+	
+	Employee e1=new Employee();
+	e1.setId(1005);
+	e1.setName("Manisha");
+	e1.setSalary(19000);
+
+
+	Employee e2=new Employee();
+	e2.setId(1006);
+	e2.setName("Priya");
+	e2.setSalary(37000);
+
+	
+	d1.addEmployee(e1);
+	d1.addEmployee(e2);
+	
+	em.persist(d1);
+***********************************************************************

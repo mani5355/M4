@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(buttonClick);
+	function buttonClick() {
+		$("button").click(hideAll);
+
+	}
+
+	function hideAll() {
+		$("p").hide();
+	}
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p>First Paragraph</p>
+	<p>Second Graph</p>
+	<button>Click to Hide</button>
+</body>
+</html>
+------------------------------------------------------------------------
+/////professonal like coding
+////hide by tag
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function (){
+		$("button").click(function(){
+			$("p").hide();
+		});
+	});
+	
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p>First Paragraph</p>
+	<p>Second Graph</p>
+	<button>Click to Hide</button>
+</body>
+</html>
+--------------------------------------------
+//hide by id
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function (){
+		$("button").click(function(){
+			$("#p1").hide();
+		});
+	});
+	
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p id="p1">First Paragraph</p>
+	<p>Second Graph</p>
+		<p>Second Graph</p>
+	<button>Click to Hide</button>
+</body>
+</html>
+---------------------------------------------------------
+
+//hide by class
+
+!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function (){
+		$("button").click(function(){
+			$(".p1").hide();
+		});
+	});
+	
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p class="p1">First Paragraph</p>
+	<p>Second Graph</p>
+
+		<p class="p1">Third Graph</p>
+	<button>Click to Hide</button>
+</body>
+</html>
+-----------------------------------------------------------------
+//hide all elements
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function (){
+		$("button").click(function(){
+			$("*").hide();
+		});
+	});
+	
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p class="p1">First Paragraph</p>
+	<p>Second Graph</p>
+		<p class="p1">Third Graph</p>
+	<button>Click to Hide</button>
+</body>
+</html>
+----------------------------------------------------
+//hide by clicking on particular tag
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function (){
+		$("p").click(function(){
+			$(this).hide();
+		});
+	});
+	
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p class="p1">First Paragraph</p>
+	<p>Second Graph</p>
+		<p class="p1">Third Graph</p>
+	<button>Click to Hide</button>
+</body>
+</html>
+----------------------------------------------------------
+//hide more than one tag by clicking on it
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function (){
+		$("p,h1").click(function(){------------------------------->>>>>>>
+			$(this).hide();
+		});
+	});
+	
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p class="p1">First Paragraph</p>
+	<p>Second Graph</p>
+		<p class="p1">Third Graph</p>
+	<button>Click to Hide</button>
+</body>
+--------------------------------------------------------
+//hides first tag on clicking
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function (){
+		$("button").click(function(){
+			$("p:first").hide();---------------------->>>>>>>>>>>>>>>>>>>
+		});
+	});
+	
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p class="p1">First Paragraph</p>
+	<p>Second Graph</p>
+		<p class="p1">Third Graph</p>
+	<button>Click to Hide</button>
+</body>
+</html>
+----------------------------------------------------------------
+//hides by attribute value
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function (){
+		$("button").click(function(){
+			$("[alpha]").hide();---------->>>>>>>>>>>>>>>>>>>>
+		});
+	});
+	
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p class="p1">First Paragraph</p>
+	<p class="p1">Second Graph</p>
+		<p alpha="test">Third Graph</p>------------->>>>>>>>>>>>>>>>>>>>>
+	<button>Click to Hide</button>
+</body>
+</html>
+</html>
+--------------------------------------------------
+//hide AND SHOW
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function() {
+		$("#a").click(function() {
+			$("p").hide();
+		}
+		
+		);
+		$("#b").click(function() {
+			$("p").show();
+		});
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p class="p1">First Paragraph</p>
+	<p class="p1">Second Graph</p>
+	<p alpha="test">Third Graph</p>
+	<button id="a">Click to Hide</button>
+	<button id="b">Click to Show</button>
+</body>
+</html>
+
+----------------------------------
+//double click to hide
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function() {
+		$("#a").dblclick(function() {
+			$("p").hide();
+		}
+		
+		);
+		$("#b").click(function() {
+			$("p").show();
+		});
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p class="p1">First Paragraph</p>
+	<p class="p1">Second Graph</p>
+	<p alpha="test">Third Graph</p>
+	<button id="a"> Double Click to Hide</button>
+	<button id="b">Click to Show</button>
+</body>
+</html>
+-------------------
+$("#b").mouseover(function() {
+			$("p").show();
+		});
+------------------------------
+//show ND HIDE
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function() {
+		$("#a").click(function() {
+			$("p").toggle();
+		});
+		
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p class="p1">First Paragraph</p>
+	<p class="p1">Second Graph</p>
+	<p alpha="test">Third Graph</p>
+	<button id="a"> Double Click to Hide/show</button>
+	
+</body>
+</html>
+-----------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function() {
+		$("input").focus(function() {
+			$("p").hide();
+		});
+	$("input").blur(function() {
+		$("p").show();
+	});
+		
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p class="p1">First Paragraph</p>
+	<p class="p1">Second Graph</p>
+	<p alpha="test">Third Graph</p>
+	<input type="text" size="10"/>
+	<button id="a"> Double Click to Hide/show</button>
+	
+</body>
+</html>
+---------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function() {
+		$("input").focus(function() {
+			$("p").css("background-color","red");
+		});
+	$("input").blur(function() {
+		$("p").css("background-color","blue");
+	});
+		
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p class="p1">First Paragraph</p>
+	<p class="p1">Second Graph</p>
+	<p alpha="test">Third Graph</p>
+	<input type="text" size="10"/>
+	<button id="a"> Double Click to Hide/show</button>
+	
+</body>
+</html>
+-----------------------------------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function() {
+		$("input").focus(function() {
+			$("p").hide(1000);
+		});
+	$("input").blur(function() {
+		$("p").show(1000);
+	});
+		
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p class="p1">First Paragraph</p>
+	<p class="p1">Second Graph</p>
+	<p alpha="test">Third Graph</p>
+	<input type="text" size="10"/>
+	<button id="a"> Double Click to Hide/show</button>
+	
+</body>
+</html>
+-------------------------------------------------------------------------------
+<script>
+	$(document).ready(function() {
+		$("input").focus(function() {
+			$("p").hide(1000,function(){
+				alert('bye');
+			});
+		});
+	$("input").blur(function() {
+		$("p").show(1000);
+	});
+		
+	});
+</script>
+-------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready( function(){
+		$("#b1").click( function(){
+			alert($("p").text());
+		});
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+<p> Welcome To India </p>
+	<button id="b1"> Click</button>
+
+</body>
+</html>
+---------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready( function(){
+		$("#b1").click( function(){
+			alert($("p").html());------------------>>get  as html element...if text...as text element
+		});
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+<p> Welcome To  <b> India </b> </p>
+	<button id="b1"> Click</button>
+
+</body>
+</html>
+------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready( function(){
+		$("#b1").click( function(){
+			$("p").html(" Welcome To  <b> US </b>");--------------->>>set
+		});
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+<p> Welcome To  <b> India </b> </p>
+	<button id="b1"> Click</button>
+
+</body>
+</html>
+-------------------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function() {
+		$("#b1").click(function() {
+			alert($("#t1").val());-------->>>>>>get
+		});
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p>
+		Welcome To <b> India </b>
+	</p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+---------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function() {
+		$("#b1").click(function() {
+			$("#t1").val("Welcome");----------->>set
+		});
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p>
+		Welcome To <b> India </b>
+	</p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+-----------------------------------
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function() {
+		$("#b1").click(function() {
+			$("#t1").val($("p").text());
+		});
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p>
+		Welcome To <b> India </b>
+	</p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+--------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function() {
+		$("#b1").click(function() {
+			$("p").append("appedn gext");
+		});
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p>
+		Welcome To <b> India </b>
+	</p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+-------------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function() {
+		$("#b1").click(function() {
+			$("p").prepend("appedn gext");
+		});
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p>
+		Welcome To <b> India </b>
+	</p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+-----------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function() {
+		$("#b1").click(function() {
+			$("p").after("appedn gext");
+		});
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p>
+		Welcome To <b> India </b>
+	</p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+----------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function() {
+		$("#b1").click(function() {
+			$("p").before("appedn gext");
+		});
+	});
+</script>
+<body>
+	<h1>JQuery Demo</h1>
+
+	<p>
+		Welcome To <b> India </b>
+	</p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+------------------------------------
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<script>
+	$(document).ready(function() {
+		$("#b1").click(function() {
+			$("#d1").remove();
+		});
+	});
+</script>
+<body>
+	<div id="d1">
+		<h1>JQuery Demo</h1>
+
+		<p>
+			Welcome To <b> India </b>
+	</div>
+	</p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html
+----------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<style>
+.s1 {
+	color : red;
+	
+}
+</style>
+<script>
+	$(document).ready(function() {
+		$("#b1").click(function() {
+			$("p").addClass("s1");
+		});
+	});
+</script>
+<body>
+	<div id="d1">
+		<h1>JQuery Demo</h1>
+
+		<p>
+			Welcome To <b> India </b>
+	</div>
+	</p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+---------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<style>
+.s1 {
+	color : red;
+	
+}
+</style>
+<script>
+	$(document).ready(function() {
+		$("#b1").click(function() {
+			$("p").toggleClass("s1");
+		});
+	});
+</script>
+<body>
+	<div id="d1">
+		<h1>JQuery Demo</h1>
+
+		<p>
+			Welcome To <b> India </b>
+	</div>
+	</p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+----------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<style>
+.s1 {
+	color: red;
+}
+</style>
+<script>
+	$(document).ready(function() {
+		$("#b1").click(function() {
+			$("p").first().toggleClass("s1");
+		});
+	});
+</script>
+<body>
+
+	<h1>JQuery Demo</h1>
+
+	<p>
+		Welcome To <b> India </b>
+
+	</p>
+
+	<p>
+		Welcome To <b> 1dia </b>
+
+	</p>
+
+	<p>
+		Welcome To <b> 2dia </b>
+
+	</p>
+
+	<p>
+		Welcome To <b> 3dia </b>
+
+	</p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+-------------------------------------
+!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<style>
+.s1 {
+	color: red;
+}
+</style>
+<script>
+	$(document).ready(function() {
+		$("#b1").click(function() {
+			$("p").eq(1).toggleClass("s1");
+		});
+	});
+</script>
+<body>
+
+	<h1>JQuery Demo</h1>
+	<p>
+		Welcome To <b> India </b>
+	</p>
+	<p>
+		Welcome To <b> 1dia </b>
+	</p>
+	<p>
+		Welcome To <b> 2dia </b>
+	</p>
+	<p>
+		Welcome To <b> 3dia </b>
+	</p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+-----------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<style>
+.s1 {
+	color: red;
+}
+</style>
+<script>
+	$(document).ready(function() {
+		$("#b1").click(function() {
+			$("p").filter(".p1").toggleClass("s1");
+		});
+	});
+</script>
+<body>
+
+	<h1>JQuery Demo</h1>
+	<p class="p1">
+		Welcome To <b> India </b>
+	</p>
+	<p class="p1">
+		Welcome To <b> 1dia </b>
+	</p>
+	<p>
+		Welcome To <b> 2dia </b>
+	</p>
+	<p>
+		Welcome To <b> 3dia </b>
+	</p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+----------------------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<style>
+.s1 {
+	color: red;
+}
+</style>
+<script>
+	jQuery(document).ready(function() {
+		jQuery("#b1").click(function() {
+			jQuery("p").filter(".p1").toggleClass("s1");
+		});
+	});
+</script>
+<body>
+
+	<h1>JQuery Demo</h1>
+	<p class="p1">
+		Welcome To <b> India </b>
+	</p>
+	<p class="p1">
+		Welcome To <b> 1dia </b>
+	</p>
+
+	<p>
+		Welcome To <b> 2dia </b>
+	</p>
+
+	<p>
+		Welcome To <b> 3dia </b>
+	</p>
+
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+--------------------------------------------------
+/****
+*
+*NO CONFLICT
+*
+*
+**************/
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<style>
+.s1 {
+	color: red;
+}
+</style>
+<script>
+var jq=$.noConflict();
+	jq(document).ready(function() {
+		jq("#b1").click(function() {
+			jq("p").filter(".p1").toggleClass("s1");
+		});
+	});
+</script>
+<body>
+
+	<h1>JQuery Demo</h1>
+	<p class="p1">
+		Welcome To <b> India </b>
+	</p>
+	<p class="p1">
+		Welcome To <b> 1dia </b>
+	</p>
+
+	<p>
+		Welcome To <b> 2dia </b>
+	</p>
+
+	<p>
+		Welcome To <b> 3dia </b>
+	</p>
+
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+------------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<style>
+.s1 {
+	color: red;
+}
+</style>
+<script>
+
+	$(document).ready(function() {
+		$("#b1").click(function(){
+			var str='{"empid": "1000"}';
+			var obj= jQuery.parseJSON(str);
+			$("#p1").text(obj.empid);
+			
+				});
+		
+		
+	});
+</script>
+<body>
+
+	<h1>JQuery Demo</h1>
+	<p id="p1">  </p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+----------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<style>
+.s1 {
+	color: red;
+}
+</style>
+<script>
+
+	$(document).ready(function() {
+		$("#b1").bind("click",function(){-------------------->>>>>>>bind and unbind
+			var str='{"empid": "1000"}';
+			var obj= jQuery.parseJSON(str);
+			$("#p1").text(obj.empid);
+			
+				});
+		
+		
+	});
+</script>
+<body>
+
+	<h1>JQuery Demo</h1>
+	<p id="p1">  </p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+-----------------------------------
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="scripts/jquery-3.2.1.min.js"></script>
+</head>
+<style>
+.s1 {
+	color: red;
+}
+</style>
+<script>
+
+	$(document).ready(function() {
+		$("#b1").on("click",function(){------>>>on and off
+			var str='{"empid": "1000"}';
+			var obj= jQuery.parseJSON(str);
+			$("#p1").text(obj.empid);
+			
+				});
+		
+		
+	});
+</script>
+<body>
+
+	<h1>JQuery Demo</h1>
+	<p id="p1">  </p>
+	<input id="t1" type="text" size="10" />
+	<button id="b1">Click</button>
+
+</body>
+</html>
+------------------------
+
+
+
